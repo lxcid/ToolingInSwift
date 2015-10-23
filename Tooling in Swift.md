@@ -325,7 +325,7 @@ pod install
 
 ## Cons of **Apple Generic Versioning**
 
-- No specification
+- No specification/No version graph
 - Inconsistent
 - Not expressive
 - No git support
@@ -351,7 +351,41 @@ pod install
 
 ---
 
-# LXSemVer.framework
+# [fit] Major.Minor.Patch-Prerelease(DSV)+Metadata(DSV)
+#### **DSV =Dot Separated Values**
+
+---
+
+![fit](images/semver_graph.png)
+
+---
+
+# [fit] **LXSemVer.framework**
+### [lxcid/LXSemVer](https://github.com/lxcid/LXSemVer)
+
+^ Carthage: Share your project scheme.
+^ Cocoapods-Rome: Create a podspec.
+
+---
+
+# Scripting CLI
+
+*Podfile*
+
+```Ruby
+plugin 'cocoapods-rome'
+pod 'LXSemVer', '~> 1.0'
+```
+
+*semver*
+
+```Bash
+#!/usr/bin/env xcrun swift -F Rome
+```
+
+---
+
+# DEMO
 
 ---
 

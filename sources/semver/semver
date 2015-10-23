@@ -1,0 +1,54 @@
+#!/usr/bin/env xcrun swift -F Rome
+
+import LXSemVer
+import Commander
+
+class StandardErrorOutputStream: OutputStreamType {
+  func write(string: String) {
+    let stderr = NSFileHandle.fileHandleWithStandardError()
+    stderr.writeData(string.dataUsingEncoding(NSUTF8StringEncoding)!)
+  }
+}
+
+enum VersionComponent: String {
+	case Major = "major"
+	case Minor = "minor"
+	case Patch = "patch"
+	case Prerelease = "prerelease"
+}
+
+let main = command(
+	Argument<String>("version"),
+	Option("bump", "prerelease", description: "major, minor, patch or (default) prerelease.")
+) { versionString, versionComponent in
+	guard let version =  Version(string: versionString) else {
+		var stderr = StandardErrorOutputStream()
+		print("Error: Invalid version string (\(versionString)).", toStream:&stderr)
+		return
+	}
+	if let versionComponentToBeBumped = VersionComponent(rawValue: versionComponent) {
+		switch (versionComponentToBeBumped) {
+			case .Major:
+				print(Version(major: version.major + 1, minor: version.minor, patch: version.patch))
+			case .Minor:
+				print(Version(major: version.major, minor: version.minor + 1, patch: version.patch))
+			case .Patch:
+				print(Version(major: version.major, minor: version.minor, patch: version.patch + 1))
+			case .Prerelease:
+				print(version.next().sort(<).first!)
+		}
+	} else {
+		if
+			let prerelease = version.prerelease where prerelease.values.first! == versionComponent,
+			let nextVersion = version.next().sort(<).first {
+			print(nextVersion)
+		} else {
+			let prerelease = DotSeparatedValues(string: versionComponent)
+			if let nextVersion = Version(major: version.major, minor: version.minor, patch: version.patch, prerelease: prerelease).next().first {
+				print(nextVersion)
+			}
+		}
+	}
+}
+
+main.run()

@@ -1,0 +1,13 @@
+PODS:
+  - Commander (0.2.2)
+  - LXSemVer (1.0.1)
+
+DEPENDENCIES:
+  - Commander (~> 0.2)
+  - LXSemVer (~> 1.0)
+
+SPEC CHECKSUMS:
+  Commander: 3634740c4e1ed3a76ff55426424950e4c8a822e0
+  LXSemVer: 83da5e75d3b3951380c4c8e2bc2ec0bbae971b4e
+
+COCOAPODS: 0.39.0
