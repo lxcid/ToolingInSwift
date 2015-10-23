@@ -134,6 +134,55 @@ Circle CI (beta)
 
 ---
 
+![fit](images/xcode_menu_product_create_bot.png)
+
+---
+
+![200%](images/schedule_on_commit.png)
+
+---
+
+![200%](images/schedule_periodically.png)
+
+---
+
+![100%](images/triggers.png)
+
+---
+
+![inline, 50%](sources/HackerNewsReader/Design/Icon Rendered/iTunesArtwork@2x.png)
+
+[rnystrom/HackerNewsReader](https://github.com/rnystrom/HackerNewsReader)
+
+---
+
+![fit](images/integrate_no_cocoapods_error.png)
+
+---
+
+# Integration Error
+
+```
+Error: /../Podfile.lock: No such file or directory
+Error: /Manifest.lock: No such file or directory
+Error: The sandbox is not in sync with the Podfile.lock.
+Run 'pod install' or update your CocoaPods installation.
+```
+
+---
+
+Cocoapods
+
+---
+
+_xcsbuildd
+
+---
+
+# DEMO
+
+---
+
 # [fit] *Automate*
 ## Versioning
 

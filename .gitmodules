@@ -1,0 +1,4 @@
+[submodule "sources/HackerNewsReader"]
+	path = sources/HackerNewsReader
+	url = https://github.com/lxcid/HackerNewsReader.git
+	branch = ci
