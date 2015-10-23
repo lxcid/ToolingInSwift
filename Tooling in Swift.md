@@ -154,6 +154,10 @@ Circle CI (beta)
 
 [rnystrom/HackerNewsReader](https://github.com/rnystrom/HackerNewsReader)
 
+**Demo**
+
+^ We attempt to set up continuous integration for HackerNewsReader.
+
 ---
 
 ![fit](images/integrate_no_cocoapods_error.png)
@@ -171,20 +175,89 @@ Run 'pod install' or update your CocoaPods installation.
 
 ---
 
-Cocoapods
+# [fit] Cocoapods
+#### **automate dependency management**
 
 ---
 
-_xcsbuildd
+# Run
+
+```bash
+sudo gem install cocoapods
+```
+
+---
+
+# Pre-Trigger
+
+```bash
+pod install
+```
+
+---
+
+![fit](images/integrate_resolve_cocoapods_with_sudo.png)
+
+---
+
+# **Without** <br /> ~~`sudo`~~ <br /> **?**
+
+---
+
+![fit](images/os_x_server_users__xcsbuildd.png)
+
+^ Integration are run under the user `_xcsbuildd` (likely acronym for Xcode Server Build Daemon).
+^ We needs set up cocoapods in user space.
+
+---
+
+# Pre-Trigger
+
+```bash
+#!/bin/sh
+export WORKING_DIR="HackerNewsReader"
+# Cocoapods require us to define the language
+export LANG=en_US.UTF-8
+# Add user space bin directory of rubygem in $PATH
+if which ruby >/dev/null && which gem >/dev/null; then
+	PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
+fi
+# Install cocoapods in user space of rubygem
+gem install --user-install cocoapods
+cd $WORKING_DIR
+pod install
+```
 
 ---
 
 # DEMO
 
+^ [After Demo]
+^ We gotten the project set up for continuous integration.
+^ Periodically, the CI will detect new commits and spawn an integration.
+ 
+---
+
+# Nightly Build
+
+---
+
+# Nightly Build
+
+☐ Versioning
+
+☑︎ **Integration**
+
+☐ Commit & Tag
+
+☐ Distribute
+
 ---
 
 # [fit] *Automate*
 ## Versioning
+
+^ Mostly incremental
 
 ---
 
@@ -219,16 +292,56 @@ _xcsbuildd
 *CFBundleVersion*
 - 7B91b
 *ProductBuildVersion*
-- 9079000000000000
-*SourceVersion*
+
+---
+
+![fit](images/about_maps.png)
+
+---
+
+## **Apple Generic Versioning** Map
+
+- 2.0
+*CFBundleShortVersionString*
+- 1844.0.15
+*CFBundleVersion*
+
+---
+
+![fit](images/about_server.png)
+
+---
+
+## **Apple Generic Versioning** OS X Server
+
+- 5.0.15
+*CFBundleShortVersionString*
+- 662
+*CFBundleVersion*
+- 15S4033
+*ProductBuildVersion*
 
 ---
 
 ## Cons of **Apple Generic Versioning**
 
 - No specification
+- Inconsistent
 - Not expressive
-- Build (Internal) have Weak Flow
+- No git support
+- No versioning for Version (Marketing)
+- **Limited versioning for Build (Internal)**
+
+---
+
+# Limited versioning for Build (Internal)
+#### **agvtool next-version | bump**
+
+⭕️ 1844.0.15 ➤ 1845
+
+❌ 1844.0.15 ➤ 1844.1
+
+❌ 1844.0.15 ➤ 1844.0.16
 
 ---
 
@@ -238,7 +351,7 @@ _xcsbuildd
 
 ---
 
-NSTask
+# LXSemVer.framework
 
 ---
 
