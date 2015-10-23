@@ -89,10 +89,48 @@
 
 ---
 
-![fit](http://a2.mzstatic.com/eu/r30/Purple1/v4/57/29/db/5729dbcb-9018-a571-d2b3-8f4768007ecc/icon256-2x.png)
+# Build
+
+- *On-demand*
+Makefile
+nomad/shenzhen
+fabric/fastlane
+custom scripts
+
+^ Most tools are ruby backed.
+^ [nomad/shenzhen](https://github.com/nomad/shenzhen)
+^ [fabric/fastlane](https://fastlane.tools) recently got acquired by Twitter, part of Fabric.
+
+---
+# Build
+
+- **Scheduled/Triggered**
+Xcode Server
+Travis CI
+Circle CI (beta)
+
+---
+# Build
+
+- **Scheduled/Triggered**
+☞ Xcode Server ☜
+Travis CI
+Circle CI (beta)
+
+^ Focus on Xcode Server 
+
+---
+
+![fit](images/os_x_server_icon.png)
 # OS X Server <br /> *19.99 USD*
 
-^ TODO: Change to OS X Server image.
+---
+
+![fit](images/xcode_server_settings.png)
+
+---
+
+![fit](images/xocde_preference_accounts_servers.png)
 
 ---
 
