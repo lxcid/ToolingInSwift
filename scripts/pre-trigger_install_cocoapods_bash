@@ -4,5 +4,8 @@ if which ruby >/dev/null && which gem >/dev/null; then
 	PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 fi
 gem install --user-install cocoapods
+gem install --user-install cocoapods-rome
 cd $1
+pod install
+cd Scripts
 pod install
