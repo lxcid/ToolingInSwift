@@ -1,0 +1,4 @@
+#!/bin/sh
+export WORKING_DIR="HackerNewsReader"
+cd "$WORKING_DIR/Scripts"
+./nightly_build_commit_tag

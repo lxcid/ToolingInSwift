@@ -208,6 +208,7 @@ pod install
 
 ^ Integration are run under the user `_xcsbuildd` (likely acronym for Xcode Server Build Daemon).
 ^ We needs set up cocoapods in user space.
+^ /bin/false -> /bin/bash
 
 ---
 
@@ -461,6 +462,20 @@ module DevToolsCore {
 ---
 
 # **DevToolsCore.framework**
+#### Resolve framework dependencies
+
+```Bash
+$ otool -L /path/to/DevToolsCore.framework/DevToolsCore
+	@rpath/DVTFoundation.framework/Versions/A/DVTFoundation
+	@rpath/IDEFoundation.framework/Versions/A/IDEFoundation
+	@rpath/DevToolsFoundation.framework/Versions/A/DevToolsFoundation
+	@rpath/DevToolsSupport.framework/Versions/A/DevToolsSupport
+ 
+```
+
+---
+
+# **DevToolsCore.framework**
 #### Import the modularized Framework
 
 ```Swift
@@ -470,10 +485,10 @@ module DevToolsCore {
 	-F /Applications/Xcode.app/Contents/SharedFrameworks
 	-F /Applications/Xcode.app/Contents/Frameworks
 	-F /Applications/Xcode.app/Contents/PlugIns/Xcode3Core.ideplugin/Contents/Frameworks
-	-framework DevToolsFoundation
-	-framework DevToolsSupport
 	-framework DVTSourceControl
 	-framework IDEFoundation
+	-framework DevToolsFoundation
+	-framework DevToolsSupport
 	-framework DVTFoundation
 	-framework IBFoundation
 	-framework IBAutolayoutFoundation
@@ -507,6 +522,46 @@ import DevToolsCore
 
 ---
 
+# Commit & Tag
+
+```Bash
+/usr/bin/git commit --all --message="$VERSION"
+/usr/bin/git tag $VERSION
+/usr/bin/git push --set-upstream
+/usr/bin/git push --tags
+```
+
+---
+
+# Distribute
+
+```Bash
+# http://stackoverflow.com/a/32784145
+originalBinaryName=$(basename "${XCS_ARCHIVE%.*}".ipa)
+originalBinaryPath="${XCS_OUTPUT_DIR}/ExportedProduct/Apps/${originalBinaryName}"
+
+xcodebuild -exportArchive -exportFormat IPA \
+	-exportProvisioningProfile my_profile_name \
+	-archivePath $XCS_ARCHIVE \
+	-exportPath /path/to/AppName.ipa \
+
+# Check with your distribution provider on the CLI to distribute the app. 
+```
+
+---
+
+# Nightly Build
+
+☑ **Versioning**
+
+☑︎ **Integration**
+
+☑︎ **Commit & Tag**
+
+☑︎ **Distribute**
+
+---
+
 # [fit] *Automate*
 ## Code Generation
 
@@ -514,133 +569,28 @@ import DevToolsCore
 
 ---
 
-Automating your development process with Swift
+![100%](images/taylor_swift_with_mustache.png) 
 
 ---
 
-# Agenda
+# Xcode Server
 
-- When is swift the right tool for the right job?
- - Hook into your build processes:
-  - Development process
-  - Continuous integration process
-  	- Beta/App Store Release
-- Xcode Plugin
+- Xcode Server is written in Node
+**/Applications/Xcode.app/Contents/Developer/usr/share/xcs/xcsd**
+- [Xcode Server API](https://developer.apple.com/library/watchos/documentation/Xcode/Conceptual/XcodeServerAPIReference/index.html)
 
 ---
 
-No matter what, our grand master is Xcode.
+![150%](images/automation.png)
+
+^ https://xkcd.com/1319/
 
 ---
 
-# Tools I loved
-
-- mogenerator (objective-c)
-- cocoapods (ruby)
-- catherage (swift)
+![200%](images/the_general_problem.png)
 
 ---
 
-# Custom Tools
-
-- Generates enum/extension from asset catalog.
-- Alert slack of integration result.
-- Automating versioning versioning.
-- mogenerator.
-
----
-
-# Automating versioning
-
----
-
-## Existing tool
-
-- agvtool
-
-
----
-
-# Automating versioning
-## Version Bump
-
-- 2 type of version:
- - Version (CFBundleShortVersionString): Marketing
- - Build (CFBundleVersion): Internal
-
-## Apple Answer
-
- - Technical Q&A QA1827
-
-- agvtool
- - Current Project Version (CURRENT_PROJECT_VERSION): Integer or floating point number
- - Versioning System (VERSIONING_SYSTEM): None or Apple Generic
-
----
-
-## Why it suck
-
-- No specification of Apple Genric versioning. (man agvtool)
-- No auto figuring out of next marketing version.
-- No controling of next version granularity.
-- No GIT support (CSV and SVN only) 
-
----
-
-## TestFlight
-
-- Waiting for beta review is a **DUMB** idea
-- No support for semver
-
----
-
-## When to use agvtool
-
-- If you follows the Apple Generic versioning (Whatever it might be)
-- You are an Apple employee
-- If you like to populate your project with more settings.
-
----
-
-## Write your own!
-
-- Semantic Versioning 2 (At least it has a specification)
-- Find Xcode Project
-- Bump version
-
-[Graph showing the possible path from current version to next] 
-
----
-
-## #!/usr/bin/swift
-### Scripting in Swift
-
----
-
-## Continuous Integration
-
-- Triggers
-- Xcode Server API
-
-## http://www.robertvojta.com/2015/06/30/swift-hidden-options/
-
-## google search: swift module map
-
----
-
-https://xkcd.com/1319/
-
-^ Incomplete without an xkcd reference
-
----
-
-![fit](https://imgs.xkcd.com/comics/the_general_problem.png)
-
----
-
-![fit](https://imgs.xkcd.com/comics/the_general_problem.png)
-## Worth it?
-
-^ Might not be worth it.
+# Questions?
 
 ---
