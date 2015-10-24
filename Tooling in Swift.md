@@ -22,6 +22,12 @@
 
 ^ Start of with this quote.
 
+^ 2 year ago I gave a CI talk.
+
+^ This is like a continuoation to it.
+
+^ Along the way, we will try to write a few swift tools to aids our app.
+
 ^ As a programmer, it is your job to put yourself out of business.
 
 ---
@@ -543,7 +549,7 @@ originalBinaryPath="${XCS_OUTPUT_DIR}/ExportedProduct/Apps/${originalBinaryName}
 xcodebuild -exportArchive -exportFormat IPA \
 	-exportProvisioningProfile my_profile_name \
 	-archivePath $XCS_ARCHIVE \
-	-exportPath /path/to/AppName.ipa \
+	-exportPath $originalBinaryPath \
 
 # Check with your distribution provider on the CLI to distribute the app. 
 ```
