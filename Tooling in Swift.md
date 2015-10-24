@@ -230,6 +230,8 @@ pod install
 
 ---
 
+^ Show Xcode Web: https://khinboon.local/xcode
+
 # DEMO
 
 ^ [After Demo]
@@ -386,6 +388,122 @@ pod 'LXSemVer', '~> 1.0'
 ---
 
 # DEMO
+
+---
+
+# Scripting Nightly Triggers
+
+- Prerelease is always tagged with **nightly**
+- Retrieve project's versions from its Info.plist
+- Keep a nightly counter in its Info.plist
+**LXNightlyBuildVersionString**
+
+---
+
+# [fit] **LXXcodeTools.framework**
+### [lxcid/LXXcodeTools](https://github.com/lxcid/LXXcodeTools)
+
+---
+
+# **LXXcodeTools.framework**
+
+- Spawn new process with **NSTask**
+- Parses the output of Xcodebuild
+**#/usr/bin/xcrun xcodebuild -showBuildSettings**
+
+# DEMO
+
+---
+
+# [fit] **DevToolsCore.framework**
+#### /Applications/Xcode.app/Contents/PlugIns/Xcode3Core.ideplugin/Contents/Frameworks/DevToolsCore.framework
+
+---
+
+# **DevToolsCore.framework**
+
+- Private framework
+- Generate our own headers
+- Import the framework into Swift by
+defining a module with modulemap
+
+---
+
+# **DevToolsCore.framework**
+#### Generating headers
+
+ - *class-dump*
+ - *Partially declared headers is fine*
+
+---
+
+# **DevToolsCore.framework**
+#### Defining modulemap
+
+*Create umbrella header*
+
+```C
+#import <DevToolsCore/PBXObject.h>
+#import <DevToolsCore/PBXProject.h>
+#import <DevToolsCore/PBXProjectItem.h>
+#import <DevToolsCore/PBXTarget.h>
+```
+
+*Create modulemap*
+
+```C
+module DevToolsCore {
+	umbrella header "DevToolsCore.h"
+	link framework "DevToolsCore"
+}
+```
+
+---
+
+# **DevToolsCore.framework**
+#### Import the modularized Framework
+
+```Swift
+#!/usr/bin/env xcrun swift
+	-F Rome
+	-I modules
+	-F /Applications/Xcode.app/Contents/SharedFrameworks
+	-F /Applications/Xcode.app/Contents/Frameworks
+	-F /Applications/Xcode.app/Contents/PlugIns/Xcode3Core.ideplugin/Contents/Frameworks
+	-framework DevToolsFoundation
+	-framework DevToolsSupport
+	-framework DVTSourceControl
+	-framework IDEFoundation
+	-framework DVTFoundation
+	-framework IBFoundation
+	-framework IBAutolayoutFoundation
+
+…
+
+import DevToolsCore
+```
+
+---
+
+# DEMO
+
+---
+
+## Cons of **Semantic Versioning**
+
+- Can't submit to iTunes
+
+---
+
+# Nightly Build
+
+☑ **Versioning**
+
+☑︎ **Integration**
+
+☐ Commit & Tag
+
+☐ Distribute
 
 ---
 

@@ -1,0 +1,10 @@
+#!/bin/sh
+export WORKING_DIR="HackerNewsReader"
+export LANG=en_US.UTF-8
+if which ruby >/dev/null && which gem >/dev/null; then
+	PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
+fi
+gem install --user-install cocoapods-rome
+cd "$WORKING_DIR/Scripts"
+pod install
+./nightly_build_versioning
